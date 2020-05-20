@@ -8,6 +8,7 @@ ZMAGA= "W"
 PORAZ="X"
 VEC_KOT_CRKA = ">"
 POSEBEN_ZNAK = "!"
+ZACETEK = "S"
 
 class Igra:
 
@@ -28,10 +29,11 @@ class Igra:
         return len(self.napacne_crke())
 
     def zmaga(self):
-        for crka in self.crke:
-            if not crka in self.crke:
-                return False
-        return True
+        return all(crka in self.crke for crka in self.geslo)
+    #    for crka in self.crke:
+    #        if not crka in self.crke:
+    #            return False
+    #    return True
 
     def poraz(self):
         return self.stevilo_napak() > STEVILO_DOVOLJENIH_NAPAK
@@ -52,7 +54,7 @@ class Igra:
         if len(ugib) > 1 or len(ugib) == 0:
             return VEC_KOT_CRKA
         crka = ugib.upper()
-        if crka not in "ABCČDEFGHIJKLMNOPRSŠTUVZŽQWY":
+        if crka not in 'ABCČDEFGHIJKLMNOPRSŠTUVZŽQWY':
             return POSEBEN_ZNAK
         if crka in self.crke:
             return PONOVLJENA_CRKA
@@ -77,7 +79,30 @@ def nova_igra():
     return Igra(random.choice(bazen_besed))
 
 
+class Vislice:
+
+    def __init__(self):
+        self.igre = {}
+
+    def prost_id_igre(self):
+        if len(self.igre) == 0:
+            return 0
+        else:
+            return max(self.igre.keys()) + 1
+
+    def nova_igra(self):
+        igra = nova_igra()
+        id_igre = self.prost_id_igre()
+        self.igre[id_igre] = (igra, ZACETEK)
+        return id_igre
+
+    def ugibaj(self, id_igre, crka):
+        igra,_ = self.igre[id_igre]
+        poskus = igra.ugibaj(crka)
+        self.igre[id_igre] = (igra, poskus)
 
 
-igra = Igra("ABRAKADABRA", ["A","E","I","R"])
+        
+
+
 
