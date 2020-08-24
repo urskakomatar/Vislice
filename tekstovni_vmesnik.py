@@ -33,17 +33,19 @@ def izpis_poraza(igra):
     )
     return tekst
 
+
+
 def izpis_napake():
     return '\n####### ugiba se ena črka naenkrat! ########\n\n'
 
 def izpis_napake_znak():
     return '\n\######### brez posebnih znakov! ########\n\n'
 
-def zahtevaj_vnos():
-    return input('Črka: ')
+
 
 
 def pozeni_vmesnik():
+    
 
     igra = model.nova_igra()
 
